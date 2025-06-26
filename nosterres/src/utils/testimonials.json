@@ -1,0 +1,20 @@
+[
+{
+    "id": 1,
+    "name": "Aïssata D.",
+    "rating": 5,
+    "text": "Je commande régulièrement des produits cosmétiques naturels sur Noterres. La qualité est exceptionnelle et le service client très réactif. Je recommande vivement !"
+},
+{
+    "id": 2,
+    "name": "Mamadou K.",
+    "rating": 5,
+    "text": "Noterres me permet de retrouver les saveurs de mon pays. Les produits arrivent toujours frais et bien emballés. Un service impeccable !"
+},
+{
+    "id": 3,
+    "name": "Fatou N.",
+    "rating": 4.5,
+    "text": "La livraison a été plus rapide que prévue ! J'ai adoré les tissus wax que j'ai commandés, la qualité est au rendez-vous. Je reviendrai certainement."
+}
+]

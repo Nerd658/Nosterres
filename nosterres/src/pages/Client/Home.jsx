@@ -7,38 +7,7 @@ import ProductCard from '../../components/common/ProductCard';
 import TestimonialCard from '../../components/common/TestimonialCard';
 import products from '../../utils/products.json';
 import testimonials from '../../utils/testimonials.json';
-
-// Données statiques pour les catégories et avantages
-const categories = [
-  { name: 'Fruits & Légumes', icon: 'fa-apple-alt', description: 'Fraîcheur garantie' },
-  { name: 'Épicerie', icon: 'fa-utensils', description: 'Saveurs locales' },
-  { name: 'Cosmétiques', icon: 'fa-spa', description: 'Naturels & bio' },
-  { name: 'Textile', icon: 'fa-tshirt', description: 'Artisanat local' },
-  { name: 'Artisanat', icon: 'fa-gem', description: 'Créations uniques' },
-];
-
-const benefits = [
-  { 
-    title: 'Livraison rapide', 
-    icon: 'fa-truck', 
-    description: 'Recevez vos commandes en moins de 48h dans les grandes villes' 
-  },
-  { 
-    title: 'Paiement sécurisé', 
-    icon: 'fa-shield-alt', 
-    description: 'Transactions 100% sécurisées avec nos partenaires bancaires' 
-  },
-  { 
-    title: 'Produits authentiques', 
-    icon: 'fa-leaf', 
-    description: 'Directement des producteurs et artisans locaux' 
-  },
-  { 
-    title: 'Support client', 
-    icon: 'fa-headset', 
-    description: 'Assistance 7j/7 via WhatsApp, email et téléphone' 
-  },
-];
+import { categories, benefits } from '../../donnees_fictives/homePageData.js';
 
 const Home = () => {
   return (
@@ -59,11 +28,11 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
               <Button
                 text="Explorer la boutique"
-                className="px-6 py-3 bg-primary text-white rounded-full hover:bg-primary-dark font-medium shadow-md"
+                className="px-6 py-3 bg-primary text-white rounded-full hover:bg-primary-dark font-medium shadow-md "
               />
               <Button
                 text="Comment ça marche ?"
-                className="px-6 py-3 bg-white text-green-600 border border-green-600 rounded-full hover:bg-green-50 font-medium"
+                className="px-6 py-3 bg-white text-primary border border-primary rounded-full hover:bg-green-50 font-medium"
               />
             </div>
           </div>
@@ -93,7 +62,7 @@ const Home = () => {
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold">Produits en vedette</h2>
+            <h2 className="text-2xl md:text-3xl font-bold ">Produits en vedette</h2>
             <Button 
               text="Voir tout" 
               className="text-primary font-medium hover:underline bg-transparent border-none" 

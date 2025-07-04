@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../common/Button';
+import { useCart } from '../../context/CartContext'; // Importation du hook useCart
+import { useAuth } from '../../context/AuthContext'; // Importation du hook useAuth
 
 const Header = () => {
-    // État pour gérer l'affichage du menu mobile
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { getTotalItems } = useCart(); // Utilisation du hook useCart
+    const { isLoggedIn, username, logout } = useAuth(); // Utilisation du hook useAuth
 
-    // Fonction pour toggler le menu mobile
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    // Gestion du clic à l'extérieur pour fermer le menu
     const handleOutsideClick = (event) => {
         const dropdown = document.getElementById('mobile-menu-dropdown');
         const button = document.getElementById('mobile-menu-button');
@@ -19,7 +21,6 @@ const Header = () => {
         }
     };
 
-    // Ajout du listener pour le clic à l'extérieur
     React.useEffect(() => {
         document.addEventListener('click', handleOutsideClick);
         return () => document.removeEventListener('click', handleOutsideClick);
@@ -57,14 +58,31 @@ const Header = () => {
             {/* Icônes de navigation */}
             <div className="flex items-center space-x-4">
             <div className="hidden md:flex space-x-2">
-                <Button
-                text="Login"
-                className="px-4 py-2 text-gray-600 bg-white font-medium"
-                />
-                <Button
-                text="Signup"
-                className="px-4 py-2 bg-primary text-white rounded-full hover:bg-primary-dark font-medium"
-                />
+                {isLoggedIn ? (
+                    <>
+                        <span className="px-4 py-2 text-gray-600 font-medium">Bienvenue, {username}</span>
+                        <Button
+                            text="Déconnexion"
+                            className="px-4 py-2 bg-primary text-white rounded-full hover:bg-primary-dark font-medium"
+                            onClick={logout}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <Link to="/login">
+                            <Button
+                                text="Login"
+                                className="px-4 py-2 text-gray-600 bg-white font-medium"
+                            />
+                        </Link>
+                        <Link to="/register">
+                            <Button
+                                text="Signup"
+                                className="px-4 py-2 bg-primary text-white rounded-full hover:bg-primary-dark font-medium"
+                            />
+                        </Link>
+                    </>
+                )}
             </div>
             <button className="p-2 text-gray-600 hover:text-primary relative" aria-label="Favoris">
                 <i className="far fa-heart text-xl"></i>
@@ -75,7 +93,7 @@ const Header = () => {
             <button className="p-2 text-gray-600 hover:text-primary relative" aria-label="Panier">
                 <i className="fas fa-shopping-cart text-xl"></i>
                 <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                2
+                {getTotalItems()} {/* Affichage dynamique du nombre d'articles */}
                 </span>
             </button>
             {/* Bouton menu mobile */}
@@ -95,12 +113,23 @@ const Header = () => {
                     isMobileMenuOpen ? 'block' : 'hidden'
                 } absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50`}
                 >
-                <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-green-50">
-                    Login
-                </a>
-                <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-green-50">
-                    Signup
-                </a>
+                {isLoggedIn ? (
+                    <>
+                        <span className="block px-4 py-2 text-gray-700">Bienvenue, {username}</span>
+                        <a href="#" onClick={logout} className="block px-4 py-2 text-gray-700 hover:bg-green-50">
+                            Déconnexion
+                        </a>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/login" className="block px-4 py-2 text-gray-700 hover:bg-green-50">
+                            Login
+                        </Link>
+                        <Link to="/register" className="block px-4 py-2 text-gray-700 hover:bg-green-50">
+                            Signup
+                        </Link>
+                    </>
+                )}
                 <div className="border-t border-gray-100 my-1"></div>
                 <a href="#" className="block px-4 py-2 text-gray-700 hover:bg-green-50">
                     Paramètres

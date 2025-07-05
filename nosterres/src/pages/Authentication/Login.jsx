@@ -1,73 +1,68 @@
-
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { useNotification } from '../../context/NotificationContext';
 
 /**
- * Composant de la page d'inscription.
- * Permet aux nouveaux utilisateurs de créer un compte.
+ * Composant de la page de connexion.
+ * Permet aux utilisateurs de se connecter avec leur email et mot de passe.
  */
-const Register = () => {
-  // États pour stocker les valeurs des champs du formulaire
-  const [name, setName] = useState('');
+const Login = () => {
+  // États pour stocker les valeurs des champs email et mot de passe
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // État pour gérer les messages d'erreur ou de succès
-  const [message, setMessage] = useState('');
   const navigate = useNavigate(); // Hook pour la navigation
+  const { login } = useAuth(); // Utilisation du hook useAuth pour accéder à la fonction login
+  const { showNotification } = useNotification(); // Utilisation du hook useNotification
 
   /**
-   * Gère la soumission du formulaire d'inscription.
+   * Gère la soumission du formulaire de connexion.
    * @param {Event} e - L'événement de soumission du formulaire.
    */
   const handleSubmit = async (e) => {
     e.preventDefault(); // Empêche le rechargement de la page
 
     try {
-      const response = await fetch('http://localhost:3000/api/register', {
+      const response = await fetch('http://localhost:3000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setMessage(data.message || 'Inscription réussie ! Vous pouvez maintenant vous connecter.');
-        // Rediriger l'utilisateur vers la page de connexion après un délai
+        showNotification(data.message || 'Connexion réussie ! Bienvenue.', 'success');
+        // Utiliser la fonction login du contexte pour stocker le token et le nom d'utilisateur
+        // Utiliser la fonction login du contexte pour stocker le token et le nom d'utilisateur
+        if (data.token && data.user && data.user.username) {
+          login(data.token, data.user.username);
+        }
+        // Stocker l'ID utilisateur séparément si nécessaire pour d'autres logiques (ex: panier)
+        // Stocker l'ID utilisateur séparément si nécessaire pour d'autres logiques (ex: panier)
+        if (data.user && data.user.id) {
+          localStorage.setItem('userId', data.user.id);
+        }
+        // Rediriger l'utilisateur après un délai pour qu'il voie le message
         setTimeout(() => {
-          navigate('/login');
-        }, 2000);
+          navigate('/'); // Redirige vers la page d'accueil
+        }, 1500);
       } else {
-        setMessage(data.message || 'Erreur lors de l\'inscription. Veuillez réessayer.');
+        showNotification(data.message || 'Email ou mot de passe incorrect.', 'error');
       }
     } catch (error) {
-      console.error('Erreur lors de l\'inscription:', error);
-      setMessage('Une erreur est survenue. Veuillez réessayer plus tard.');
+      console.error('Erreur lors de la connexion:', error);
+      showNotification('Une erreur est survenue. Veuillez réessayer plus tard.', 'error');
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="px-8 py-6 mt-4 text-left bg-white shadow-lg rounded-lg w-full max-w-md">
-        <h3 className="text-2xl font-bold text-center text-green-600">Inscription</h3>
+        <h3 className="text-2xl font-bold text-center text-green-600">Connexion</h3>
         <form onSubmit={handleSubmit} className="mt-4">
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">
-              Nom
-            </label>
-            <input
-              type="text"
-              id="name"
-              placeholder="Votre nom"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-green-500"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
               Email
@@ -96,23 +91,22 @@ const Register = () => {
               required
             />
           </div>
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-between">
             <button
               type="submit"
               className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
             >
-              S'inscrire
+              Se connecter
             </button>
+            <a href="#" className="inline-block align-baseline font-bold text-sm text-green-600 hover:text-green-800">
+              Mot de passe oublié ?
+            </a>
           </div>
-          {message && (
-            <p className={`mt-4 text-center text-sm ${response.ok ? 'text-green-500' : 'text-red-500'}`}>
-              {message}
-            </p>
-          )}
+          {/* Le message est maintenant géré par les notifications Toast */}
         </form>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default Login;

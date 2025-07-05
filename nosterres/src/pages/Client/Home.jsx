@@ -1,6 +1,5 @@
 import React from 'react';
-import Header from '../../components/layout/Header';
-import Footer from '../../components/layout/Footer';
+import { Link } from 'react-router-dom';
 import CategoriesBar from '../../components/layout/CategoriesBar';
 import Button from '../../components/common/Button';
 import ProductCard from '../../components/common/ProductCard';
@@ -12,8 +11,6 @@ import { categories, benefits } from '../../donnees_fictives/homePageData.js';
 const Home = () => {
   return (
     <div className="text-gray-800">
-      {/* Header */}
-      <Header />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-[#DFF5E3] via-[#B8E4C1] to-[#A8D5BA] py-12 md:py-20">
@@ -63,10 +60,12 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold ">Produits en vedette</h2>
-            <Button 
-              text="Voir tout" 
-              className="text-primary font-medium hover:underline bg-transparent border-none" 
-            />
+            <Link to="/produits">
+              <Button 
+                text="Voir tout" 
+                className="text-primary font-medium hover:underline bg-transparent border-none" 
+              />
+            </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products.slice(0, 4).map((product, index) => (
@@ -80,10 +79,12 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold">Produit les plus vendus</h2>
-            <Button 
-              text="Voir tout" 
-              className="text-primary font-medium hover:underline bg-transparent border-none" 
-            />
+            <Link to="/produits">
+              <Button 
+                text="Voir tout" 
+                className="text-primary font-medium hover:underline bg-transparent border-none" 
+              />
+            </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products.slice(0, 4).map((product, index) => (
@@ -173,8 +174,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <Footer />
     </div>
   );
 };

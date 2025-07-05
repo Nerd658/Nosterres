@@ -58,8 +58,8 @@ const Footer = () => {
                 <ul className="space-y-2">
                 <li className="flex items-center">
                     <i className="fas fa-envelope mr-2 text-primary-light"></i>
-                    <a href="mailto:contact@noterres.com" className="text-gray-200 hover:text-primary-light hover:underline">
-                    contact@noterres.com
+                    <a href="mailto:contact@Nosterres.com" className="text-gray-200 hover:text-primary-light hover:underline">
+                    contact@Nosterres.com
                     </a>
                 </li>
                 <li className="flex items-center">
@@ -68,7 +68,7 @@ const Footer = () => {
                 </li>
                 <li className="flex items-center">
                     <i className="fas fa-map-marker-alt mr-2 text-primary-light"></i>
-                    <span className="text-gray-200">Abidjan, Côte d'Ivoire</span>
+                    <span className="text-gray-200">Ouagadougou, Burkina Faso</span>
                 </li>
                 </ul>
             </div>
